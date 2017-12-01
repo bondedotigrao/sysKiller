@@ -31,7 +31,7 @@ public class TipoVitima {
         this.valor = valor;
         this.descricao = descricao;
     }
-    
+    @Deprecated
     public TipoVitima() {
         
     }
