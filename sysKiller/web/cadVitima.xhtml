@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        
+    </h:head>
+    <h:body>
+        <h:form>
+        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroVitima').show()"/>
+        <p:dataTable id="tabelaVitima" value="#{vitimaController.recuperarTodasVitimas()}"
+                     var="vitima" rowKey="#{vitima.codigo}" paginator="true" rows="5"
+                     selectionMode="single">
+        
+        <p:column headerText="Código">
+            #{vitima.codigo}
+        </p:column>
+        <p:column headerText="Nome">
+            #{vitima.nome}
+        </p:column>
+        <p:column headerText="Tipo de vitima">
+            #{tipoVitima.descricao}
+        </p:column>
+        <p:column headerText="Descrição físicas">
+            #{vitima.descricaoF}
+        </p:column>
+        <p:column headerText="Descrições adicionais">
+            #{vitima.descricaoA}
+        </p:column>
+            </p:dataTable>
+        </h:form>
+    
+        <p:dialog id="dialCadastroVitima" visible="false" modal="true" resizable="false"
+            widgetVar="widDialCadastroVitima">
+            <h:form id="formCadVitima">
+                <p:panelGrid columns="3">
+                    
+                </p:panelGrid>
+                <h:outputText value="#{vitimaController.cadVitima.tipo.descricao}"/><br/>
+                <p:dataTable id="tabelaTipoVitima" var="item" value="#{vitimaController.recuperarTodasVitimas()}"
+                             rowKey="#{item.codigo}" rows="5" paginator="true" selection="single">
+                    <p:column headerText="X">
+                        <p:commandButton value=". . .">
+                            <f:setPropertyActionListener value="#{item}" target="#{vitimaController.cadVitima.tipo}"/>
+                        </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Código">
+                        #{item.codigo}
+                    </p:column>
+                    <p:column>
+                        #{item.nome}
+                    </p:column>
+                      <p:column headerText="Descrições Físicas">
+                    #{item.descricaoF}
+                </p:column>
+                <p:column headerText="Descrições adicionais">
+                    #{item.descricaoA}
+                </p:column>
+                
+                </p:dataTable>
+                <p:dataTable id="tableTipoVitima" var="itemTipo" value="#{tipoVitimaController.recuperarTodosTipoVitima()}"
+                             rowKey="#{itemTipo.codigo}" rows="5" paginator="true" selectionMode="single">
+                    <p:column selectionMode="single">
+                        
+                    </p:column>
+                    <p:column headerText="Código">
+                        #{itemTipo.codigo}
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        #{itemTipo.descricao}
+                    </p:column>
+                </p:dataTable>
+                
+                <p:commandButton value="Cadastrar" action="#{vitimaController.inserir()}"
+                                 update=":formCadVitima" oncomplete="PF('widDialCadastroVitima').hide()"/>
+            </h:form>
+        </p:dialog>
+<!--            private String nome;
+    private TipoVitima tipo;
+    private String descricaoF; //descrições fisicas
+    private String descricaoA; //descrições adicionais -->
+    </h:body>
+</html>
+

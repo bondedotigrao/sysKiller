@@ -25,8 +25,7 @@ public class TipoVitima {
     private double valor;
     private String descricao;
     
-    public TipoVitima(int codigo, String tipo, double valor, String descricao) {
-        this.codigo = codigo;
+    public TipoVitima( String tipo, double valor, String descricao) {
         this.tipo = tipo;
         this.valor = valor;
         this.descricao = descricao;

@@ -10,7 +10,7 @@
     <h:body>
         <p:growl id="gro" life="4000"/>
         <h:form id="formCadTipoVitima">
-        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroCliente').show()"/>
+        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroTipoVitima').show()"/>
         <p:dataTable id="tabelaTipoVitima" value="#{tipoVitimaController.recuperarTodosTipoVitima()}"
                      var="tipoVitima" rowKey="#{tipoVitima.codigo}" paginator="true" rows="5" selectionMode="single">
             <p:column headerText="Código">
@@ -28,7 +28,7 @@
             <p:column headerText="Operações">
                 <p:commandButton icon="ui-icon-search" oncomplete="PF('widDialVisualizaTipoVitima').show()"
                     update=":formCadTipoVitima:dialVisualizaTipoVitima">
-                    <f:setPropertyActionListener value="#{tipoVitima}" target="#{tipoVitimaController.selectedTipoVitima}"/>
+                    <f:setPropertyActionListener value="#{tipoVitima}" target="#{tipoVitimaController.cadTipoVitima}"/>
                 </p:commandButton>
                 <p:commandButton icon="ui-icon-pencil" oncomplete="PF('widDialAlteraTipoVitima').show()"
                     update=":dialAlteraTipoVitima">
@@ -37,7 +37,7 @@
                 <p:commandButton icon="ui-icon-" action="#{tipoVitimaController.deletar()}"
                                  update=":formCadTipoVitima :gro">
                     <f:setPropertyActionListener value="#{tipoVitima}" target="#{tipoVitimaController.selectedTipoVitima}"/>
-                    <p:confirm header="Atenção" message="Deseja realmente o registro"/>
+                    <p:confirm header="Atenção" message="Deseja realmente apagar?"/>
                 </p:commandButton>
             </p:column>
         </p:dataTable> 

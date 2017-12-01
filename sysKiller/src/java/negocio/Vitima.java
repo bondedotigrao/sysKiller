@@ -22,14 +22,13 @@ public class Vitima {
     private String descricaoF; //descrições fisicas
     private String descricaoA; //descrições adicionais 
     
-    public Vitima(int codigo, String nome, TipoVitima tipo, String descricaoF, String descricaoA) {
-        this.codigo = codigo;
+    public Vitima( String nome, TipoVitima tipo, String descricaoF, String descricaoA) {
         this.nome = nome;
         this.tipo = tipo;
         this.descricaoF = descricaoF;
         this.descricaoA = descricaoA;
     }
-    
+    @Deprecated
     public Vitima() {
         
     }
