@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-@ManagedBean
+@ManagedBean(name = "kill")
 @RequestScoped
 public class Matador {
     

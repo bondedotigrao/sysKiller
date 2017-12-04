@@ -2,127 +2,49 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:growl id="gro" life="4000"/>
-        <h:form id="formCadKiller">
-        <p:commandButton value="cadastrar matador" oncomplete="PF('widDialCadKiller').show()"/>
-        <p:dataTable id="killerTable" value="#{killerController.recuperarTodosMatadores()}"
-                     var="killer" rowKey="#{killer.codigo}" paginator="true" rows="5"
-                     selectionMode="single">
-        <p:column headerText="Código">
-            #{killer.codigo}
-        </p:column>
-        <p:column headerText="Nome">
-            #{killer.nome}
-        </p:column>
-        <p:column headerText="Telefone">
-            #{killer.telefone}
-        </p:column>
-        <p:column headerText="Login">
-            #{killer.login}
-        </p:column>
-        <p:column headerText="Senha">
-            #{killer.senha}
-        </p:column>
-        <p:column headerText="operações">
-            <p:commandButton icon="ui-icon-search" oncomplete="PF('widDialVisualizaKiller').show()"
-                             update=":formCadKiller:dialVisualizaKiller">
-                <f:setPropertyActionListener value="#{killer}" target="#{killerController.selectedKiller}"/>
-            </p:commandButton>
-            <p:commandButton icon="ui-icon-pencil" oncomplete="PF('widDialAlterarKiller').show()"
-                             update=":dialAlterarKiller">
-                <f:setPropertyActionListener value="#{killer}" target="#{killerController.selectedKiller}"/>
-            </p:commandButton>
-            <p:commandButton icon="ui-icon-close" action="#{killerController.deletar()}" update=":formCadKiller :gro">
-                <f:setPropertyActionListener value="#{killer}" target="#{killerController.selectedKiller}"/>
-                <p:confirm header="Atenção" message="Deseja realmente apagar o registro?" />
-            </p:commandButton>
-        </p:column> 
-    </p:dataTable>
-        
-        <p:dialog id="dialVisualizaKiller" visible="false" modal="true" header="Killer cadastrado"
-                  resizable="true" widgetVar="widDialVisualizaKiller">
-            <p:panelGrid columns="2">
-                <h:outputText value="Código:"/>
-                <h:outputText value="#{killerController.selectedKiller.codigo}"/>
-                
-                <h:outputText value="Nome:"/>
-                <h:outputText value="#{killerController.selectedKiller.nome}"/>
-                
-                <h:outputText value="Telefone:"/>
-                <h:outputText value="#{killerController.selectedKiller.telefone}"/>
-                
-                <h:outputText value="Login:"/>
-                <h:outputText value="#{killerController.selectedKiller.login}"/>
-                
-                <h:outputText value="Senha:"/>
-                <h:outputText value="#{killerController.selectedKiller.senha}"/>
-                
-            </p:panelGrid>
-
-        </p:dialog>
-        </h:form>
-        
-        <p:dialog id="dialCadKiller" visible="false" modal="true" resizable="false"
-                  widgetVar="widDialCadKiller">
-            <h:form id="formDialCadastro">
-                <p:panelGrid columns="4">
-                             <h:outputText value="Nome*:"/>
-                             <p:inputText id="txtNome" value="#{killerController.cadKiller.nome}"/>
-                             <p:message for='txtNome'/>
-                             
-                             <h:outputText value="txtTelefone" />
-                             <p:inputText id="txtTelefone" value="#{killerController.selectedKiller.telefone}"/>
-                             <p:message for="txtTelefone"/>
-                             
-                             <h:outputText value="Login*:"/>
-                             <p:inputText id="txtLogin" value="#{killerController.selectedKiller.login}"/>
-                             
-                             <h:outputText value="Senha:*"/>
-                             <p:inputText id="txtSenha" value="#{killerController.selectedKiller.senha}"/>
-                             <h:outputText/>
-                </p:panelGrid>
-                <p:commandButton value="cadastrar" action="#{killerController.inserir()}"
-                                 update=":formCadKiller :gro" oncomplete="PF('widDialCadKiller').hide()">
-                    <p:confirm header="Atenção" message="Deseja realmente cadastrar?"/>
-                </p:commandButton>
-            </h:form>
-        </p:dialog>
-        <p:dialog id="dialAlteraKiller" visible="false" modal="true" resizable="true" widgetVar="widDialAlteraKiller">
-            <h:form id="formDialAltera">
-                <p:panelGrid columns="4">
-                             <h:outputText value="Nome*:"/>
-                             <p:inputText id="txtAltNome" value="#{killerController.selectedKiller.nome}"/>
-                             
-                             <h:outputText value="Telefone"/>
-                             <p:inputText id="txtAltTelefone" value="#{killerController.selectedKiller.telefone}"/>
-                             
-                             <h:outputText value="Login*:"/>
-                             <p:inputText id="txtAltLogin" value="#{killerController.selectedKiller.login}"/>
-                             
-                             <h:outputText value="Senha*:"/>
-                             <p:inputText id="txtAltSenha" value="#{killerController.selectedKiller.senha}"/>
-                </p:panelGrid>
-                <p:commandButton value="alterar" action="#{killerController.alterar()}"
-                                 update=":formCadKiller :gro" oncomplete="PF('widDialAlteraKiller).hide()">
-                    <p:confirm header="Atenção" message="deseja realmente alterar?"/>      
-                </p:commandButton> 
-            </h:form>
-        </p:dialog>
-        
-        <p:confirmDialog id="dialConfirm" global="true" widgetVar="widDialConfirm">
-            <h:form>
-                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
-                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
-                
-            </h:form>
+        <p:growl id="gro1" life="4000" showSummary="true" sticky="true"/>
+        <h:form id="formCadKill">
             
-        </p:confirmDialog>
+            <p:fieldset id="fieldCad" legend="Cadastro de Killer">
+                <p:panelGrid columns="3">
+                    <h:outputText value="Nome*:"/>
+                        <p:inputText id="txtNome1" value="#{kill.nome}"
+                                     required="true" requiredMessage="Bota o nome,carai"/>
+                        <p:message for="txtNome1"/>
+                        
+                    <h:outputText value="Telefone*:"/>
+                        <p:inputText id="txtTelefone1" value="#{kill.telefone}"/>
+                        <h:outputText/>
+                        
+                        <h:outputText value="Login*:"/>
+                        <h:inputText id="txtLogin1" value="#{kill.login}"/>
+                        <h:outputText/>
+                        
+                        <h:outputText value="Senha*:"/>
+                        <h:inputText id="txtSenha1" value="#{kill.senha}"/>
+                        <h:outputText/>
+                        
+                </p:panelGrid>
+                
+                <p:commandButton value="Cadastrar" oncomplete="PF('widDialConfirmCadKiller').show()"/>
+            </p:fieldset>
+            
+            <p:messages/>
+            
+            <p:dialog id="dialConfirmCadKiller" visible="false" resizable="false"
+                      modal="true" widgetVar="widDialConfirmCadKiller" header="Atenção!">
+                       
+                <h:outputText value="Deseja realmente cadastrar o Killer?"/><br/>
+                <p:commandButton value="Sim" action="#{killerController1.inserir(kill)}"
+                                 update=":formCadKill" oncomplete="PF('widConfirmCadKiller').hide();"/>
+                <p:commandButton value="Não" oncomplete="PF('widDialConfirmCadKiller').hide()"/>
+            </p:dialog>
+        </h:form>
     </h:body>
 </html>
 
