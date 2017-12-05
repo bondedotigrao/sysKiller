@@ -8,32 +8,6 @@
         
     </h:head>
     <h:body>
-        <h:form>
-        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroVitima').show()"/>
-        <p:dataTable id="tabelaVitima" value="#{vitimaController.recuperarTodasVitimas()}"
-                     var="vitima" rowKey="#{vitima.codigo}" paginator="true" rows="5"
-                     selectionMode="single">
-        
-        <p:column headerText="Código">
-            #{vitima.codigo}
-        </p:column>
-        <p:column headerText="Nome">
-            #{vitima.nome}
-        </p:column>
-        <p:column headerText="Tipo de vitima">
-            #{tipoVitima.descricao}
-        </p:column>
-        <p:column headerText="Descrição físicas">
-            #{vitima.descricaoF}
-        </p:column>
-        <p:column headerText="Descrições adicionais">
-            #{vitima.descricaoA}
-        </p:column>
-            </p:dataTable>
-        </h:form>
-    
-        <p:dialog id="dialCadastroVitima" visible="false" modal="true" resizable="false"
-            widgetVar="widDialCadastroVitima">
             <h:form id="formCadVitima">
                 <p:panelGrid columns="3">
                     

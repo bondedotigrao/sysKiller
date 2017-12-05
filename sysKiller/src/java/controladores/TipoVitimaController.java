@@ -3,8 +3,10 @@ package controladores;
 import infraestrutura.repositorios.implementacoes.RepositorioTipoVitimaImplDB;
 import infraestrutura.repositorios.interfaces.RepositorioGenerico;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import negocio.TipoVitima;
 
 /**
@@ -23,23 +25,34 @@ public class TipoVitimaController {
         this.cadTipoVitima = new TipoVitima();
     }
     
-    public void inserir(){
+    public String inserir(){
         this.repTipoVitima.create(this.cadTipoVitima);
         
         this.cadTipoVitima = new TipoVitima();
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tipo de vitima cadastrado com sucesso"));
+        
+        return "apresentaTipoVitima.xhtml";
     }
     
-    public void alterar(){
+    public String alterar(){
         this.repTipoVitima.update(this.selectedTipoVitima);
-
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("O tipo de vitima foi alterado."));
+        
+        return "apresentaTipoVitima.xhtml";
     }
     
     public TipoVitima recupera(int codigo){
         return this.repTipoVitima.read(codigo);
     }
     
-    public void deletar(){
+    public String deletar(){
         this.repTipoVitima.delete(this.selectedTipoVitima);
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Tipo de vítima deletado"));
+        
+        return "apresentaTipoVitima.xhtml";
     }
     
     public List<TipoVitima> recuperarTodosTipoVitima(){

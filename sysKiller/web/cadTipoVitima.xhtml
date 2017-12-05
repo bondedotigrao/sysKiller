@@ -2,122 +2,46 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <p:growl id="gro" life="4000"/>
-        <h:form id="formCadTipoVitima">
-        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroTipoVitima').show()"/>
-        <p:dataTable id="tabelaTipoVitima" value="#{tipoVitimaController.recuperarTodosTipoVitima()}"
-                     var="tipoVitima" rowKey="#{tipoVitima.codigo}" paginator="true" rows="5" selectionMode="single">
-            <p:column headerText="Código">
-                #{tipoVitima.codigo}
-            </p:column>
-            <p:column headerText="Tipo">
-                #{tipoVitima.tipo}
-            </p:column>
-            <p:column headerText="Valor">
-                #{tipoVitima.valor}
-            </p:column>
-            <p:column headerText="Descrição">
-                #{tipoVitima.descricao}
-            </p:column>
-            <p:column headerText="Operações">
-                <p:commandButton icon="ui-icon-search" oncomplete="PF('widDialVisualizaTipoVitima').show()"
-                    update=":formCadTipoVitima:dialVisualizaTipoVitima">
-                    <f:setPropertyActionListener value="#{tipoVitima}" target="#{tipoVitimaController.cadTipoVitima}"/>
-                </p:commandButton>
-                <p:commandButton icon="ui-icon-pencil" oncomplete="PF('widDialAlteraTipoVitima').show()"
-                    update=":dialAlteraTipoVitima">
-                    <f:setPropertyActionListener value="#{tipoVitima}" target="#{tipoVitimaController.selectedTipoVitima}"/>
-                </p:commandButton>
-                <p:commandButton icon="ui-icon-" action="#{tipoVitimaController.deletar()}"
-                                 update=":formCadTipoVitima :gro">
-                    <f:setPropertyActionListener value="#{tipoVitima}" target="#{tipoVitimaController.selectedTipoVitima}"/>
-                    <p:confirm header="Atenção" message="Deseja realmente apagar?"/>
-                </p:commandButton>
-            </p:column>
-        </p:dataTable> 
-        
-        <p:dialog id="dialVisualizaTipoVitima" visible="false" modal="true" header="TipoVitima cadastrado"
-            resizable="false" widgetVar="widDialVisualizaTipoVitima">
-            <p:panelGrid columns="2">
-                <h:outputText value="Código"/>
-                <h:outputText value="#{tipoVitimaController.selectedTipoVitima.codigo}"/>
+        <h:form id="formCadTVitima">
+            <p:growl id="gro1" life="4000" showDetail="true" showSummary="true"
+                     sticky="true"/>
+            
+            <p:fieldset id="fieldCad" legend="Cadastro Tipo de Vitima">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Descrição da vítima"/>
+                    <p:inputText id="txtDesc" value="#{tipoVitimaController.cadTipoVitima.descricao}"/>
+                                 
+                    <h:outputText value="Valor"/>
+                    <p:inputText id="txtValue" value="#{tipoVitimaController.cadTipoVitima.valor}"
+                                 required="true" requiredMessage="Bota o valor"/>
                 
-                <h:outputText value="Tipo"/>
-                <h:outputText value="#{tipoVitimaController.selectedTipoVitima.tipo}"/>
-                
-                <h:outputFormat value="Valor"/>
-                <h:outputText value="#{tipoVitimaController.selectedTipoVitima.valor}"/>
-                
-                <h:outputText value="Descrição"/>
-                <h:outputText value="#{tipoVitimaController.selectedTipoVitima.descricao}"/>
-            </p:panelGrid>  
-        </p:dialog>
-        
-       </h:form>
-        
-        <p:dialog id="dialCadastroTipoVitima" visible="false" modal="true" resizable="false"
-            widgetVar="widDialCadastroTipoVitima">
-            <h:form id="formDialCadastro">
-                <p:panelGrid columns="3">
-                    <h:outputText value="Tipo*:"/>
-                    <p:inputText id="txtTipo" value="#{tipoVitimaController.selectedTipoVitima.tipo}" required="true"
-                                 requiredMessage="Bota a porra do tipo"/>
-                    <p:message for="txtTipo"/>
                     
-                    <h:outputText value="Valor*:"/>
-                    <p:inputText id="txtValor" value="#{tipoVitimaController.selectedTipoVitima.valor}" rendered="true"
-                                 requiredMessage="Valor,valor,valor"/>
-                    <p:message for="txtValor"/>
+                    <h:outputText value="Tipo da vitima"/>
+                    <p:inputText id="txtTVitima" value="#{tipoVitimaController.cadTipoVitima.tipo}"
+                                 required="true" requiredMessage="Bota o tipo da vitima"/>
                     
-                    <h:outputText value="Decrição*:"/>
-                    <p:inputText id="txtDescricao" value="#{tipoVitimaController.selectedTipoVitima.descricao}" required="false"/>
-                    <h:outputText/>
-
+                    
                 </p:panelGrid>
-                <p:commandButton value="Cadastrar" action="#{tipoVitimaController.inserir()}"
-                                 update=":formCadTipoVitima :gro" oncomplete="PF('widDialCadastroTipoVitima').hide()">
-                    <p:confirm header="Atenção" message="Deseja realmente cadastrar?"/>
-                </p:commandButton> 
-            </h:form>
-        </p:dialog>
-        
-        <p:dialog id="dialAlteraTipoVitima" visible="false" modal="true" resizable="false"
-            widgetVar="widDialAlteraTipoVitima">
-            <h:form id="formDialAltera">
-                <p:panelGrid columns="3">
-                       <h:outputText value="Tipo*:"/>
-                    <p:inputText id="txtTipo2" value="#{tipoVitimaController.selectedTipoVitima.tipo}" required="true"
-                                 requiredMessage="Bota a porra do tipo"/>
-                    <p:message for="txtTipo2"/>
-                    
-                    <h:outputText value="Valor*:"/>
-                    <p:inputText id="txtValor2" value="#{tipoVitimaController.selectedTipoVitima.valor}" rendered="true"
-                                 requiredMessage="Valor,valor,valor"/>
-                    <p:message for="txtValor2"/>
-                    
-                    <h:outputText value="Decrição*:"/>
-                    <p:inputText id="txtDescricao2" value="#{tipoVitimaController.selectedTipoVitima.descricao}" required="false"/>
-                    <h:outputText/>
-                </p:panelGrid>
-                <p:commandButton value="Alterar" action="#{tipoVitimaController.alterar()}"
-                                 update=":formCadTipoVitima :gro" oncomplete="PF('widDialAlteraCleinte').hide">
-                    <p:confirm header="Atenção" message="Deseja realmente alterar?"/>
-                </p:commandButton> 
-            </h:form>
-        </p:dialog>
-        
-        <p:confirmDialog id="dialConfirm" global="true" widgetVar="widDialConfirma">
-            <h:form>
-                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
-                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
-            </h:form>
-        </p:confirmDialog>
+                <p:commandButton value="Cadastrar" oncomplete="PF('widDialConfirmCadTVitima').show()"/>
+                
+            </p:fieldset>
+            
+            <p:messages/>
+            
+            <p:dialog id="dialConfirmCadTVitima" visible="false" modal="true" resizable="false"
+                      widgetVar="widDialConfirmCadTVitima" header="Atenção!">
+                <h:outputText value="Deseja realmente cadastrar esse Tipo de Vítima?"/><br/>
+                <p:commandButton value="Sim" action="#{tipoVitimaController.inserir()}"
+                                 update=":formCadTVitima" oncomplete="PF('widDialConfirmCadTVitima').hide();"/>
+                <p:commandButton value="Não" oncomplete="PF('widDialConfirmCadTVitima').hide()"/>
+                
+            </p:dialog>
+        </h:form>
     </h:body>
 </html>
 

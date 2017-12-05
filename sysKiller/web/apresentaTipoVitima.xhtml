@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:growl id="gro"/>
+        <h:form id="formTVitima">
+            <p:dataTable id="tableTVitima" var="tvitima" value="#{tipoVitimaController.recuperarTodosTipoVitima()}"
+                         paginator="true" rows="5" rowKey="#{tvitima.codigo}" selectionMode="single"
+                         selection="#{tipoVitimaController.selectedTipoVitima}">
+                <f:facet name="header">
+                    Tipo de vitima
+                </f:facet>
+                <p:column headerText="Código">
+                    #{tvitima.codigo}
+                </p:column>
+                <p:column headerText="Tipo">
+                    #{tvitima.tipo}
+                </p:column>
+                <p:column headerText="Valor">
+                    #{tvitima.valor}
+                </p:column>
+                <p:column headerText="Descrição">
+                    #{tvitima.descricao}
+                </p:column>
+                              
+            </p:dataTable>
+            <p:commandButton value="Alterar" action="alteraTipoVitima.xhtml"/>
+            <p:commandButton value="deletar" action="#{tipoVitimaController.deletar()}"
+                             update="tableTVitima :gro">
+            <p:confirm header="Atenção" message="Deseja realmente deletar esse tipo de vítima?"/>
+            </p:commandButton>
+                <p:confirmDialog id="dialConfirm" global="true" widgetVar="widDialConfirm">
+                    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
+                    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
+                </p:confirmDialog>
+        </h:form>
+    </h:body>
+</html>
+
