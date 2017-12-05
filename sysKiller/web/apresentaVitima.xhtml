@@ -33,3 +33,26 @@
     </h:body>
 </html>
 
+   <h:form id="formVitima">
+            <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadVitima').show()"/>
+            <p:dataTable id="tableVitima" var="item" value="#{vitimaController.recuperarTodasVitimas()}"
+                         rowKey="#{item.codigo}" rows="5" paginator="true" selectionMode="single">
+                <p:column headerText="Código">
+                    #{item.codigo}
+                </p:column>
+                <p:column headerText="Nome">
+                    #{item.nome}
+                </p:column>
+                <p:column headerText="Tipo da vitima">
+                    #{item.tipo.tipo}
+                </p:column>
+                <p:column headerText="Descrição física">
+                    #{item.descricaoF}
+                </p:column>
+                <p:column headerText="Descrições Adicionais">
+                    #{item.descricaoA}
+                </p:column>
+                <p:column headerText="Operações">
+                    
+                </p:column>
+            </p:dataTable>
