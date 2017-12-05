@@ -2,6 +2,7 @@ package negocio;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,9 +18,12 @@ public class Vitima {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
+    @Column(length = 35)
     private String nome;
     private TipoVitima tipo;
-    private String descricaoF; //descrições fisicas
+    @Column(length = 50)
+    private String descricaoF;
+    @Column (length = 60)//descrições fisicas
     private String descricaoA; //descrições adicionais 
     
     public Vitima( String nome, TipoVitima tipo, String descricaoF, String descricaoA) {
