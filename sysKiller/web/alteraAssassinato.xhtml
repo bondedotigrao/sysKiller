@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="formAlteraAssassinato">
+            <p:panelGrid columns="3">
+  
+                <p:column>
+                    <h:outputText value="Código"/>
+                    <h:outputText value="#{assassinatoController.selectedAssassinato.codigo}"/><br/><br/>
+                    <h:outputText value="#{assassinatoController.selectedAssassinato.mandante}"/><br/>
+                    <h:outputText value="Mandantes:"/>
+                    <p:dataTable id="tableMandante" value="#{mandanteController.recuperarTodos()}"
+                                 var="mandante" rows="5" rowKey="#{mandante.codigo}" paginator="true"
+                                 selectionMode="single" selection="#{assassinatoController.selectedAssassinato.mandante}">
+                        <p:column headerText="X">
+                            <p:commandButton value=". . .">
+                                <f:setPropertyActionListener value="mandante1" target="#{assassinatoController.selectedAssassinato.mandante}"/>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Código">
+                            #{mandante.codigo}
+                        </p:column>
+                        <p:column headerText="Nome">
+                            #{mandante.nome}
+                        </p:column>
+                    </p:dataTable>
+                    </p:column>
+                    <p:column>
+                        
+                        <h:outputText value="Código"/>
+                    <h:outputText value="#{assassinatoController.selectedAssassinato.codigo}"/><br/><br/>
+                        <h:outputText value="#{assassinatoController.selectedAssassinato.matador}"/><br/>
+                        <h:outputText value="Assassinos:"/>
+                        <p:dataTable id="tableKiller" value="#{killerController.recuperarTodosMatadores()}" 
+                                     var="killer" rows="5"  rowKey="#{killer.codigo}" selectionMode="single"
+                                     selection="#{assassinatoController.selectedAssassinato.matador}">
+                            <p:column headerText="X">
+                                <p:commandButton value=". . .">
+                                    <f:setPropertyActionListener value="killer1" target="#{assassinatoController.selectedAssassinato.matador}"/>
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="Código">
+                                #{killer.codigo}
+                            </p:column>
+                            <p:column headerText="Nome">
+                                #{killer.nome}
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:column>
+                    <p:column>
+
+                        <h:outputText value="Código"/>
+                    <h:outputText value="#{assassinatoController.selectedAssassinato.codigo}"/><br/><br/>
+                        <h:outputText value="#{assassinatoController.selectedAssassinato.vitima}"/><br/>
+                        <h:outputText value="Vitimas:"/>
+                        <p:dataTable id="tableVitima" value="#{vitimaController.recuperarTodasVitimas()}" var="vitima"
+                                     rows="5" rowKey="#{vitima.codigo}" paginator="true" selectionMode="single"
+                                     selection="#{assassinatoController.selectedAssassinato.vitima}">
+                            <p:column headerText="X">
+                                <p:commandButton value=". . .">
+                                    <f:setPropertyActionListener value="vitima1" target="#{assassinatoController.selectedAssassinato.vitima}"/>
+                                </p:commandButton>
+                            </p:column>
+                            <p:column headerText="Codigo">
+                                #{vitima.codigo}
+                            </p:column>
+                            <p:column headerText="Nome">
+                                #{vitima.nome}
+                            </p:column>
+                        </p:dataTable>
+                    </p:column>
+
+            </p:panelGrid>
+            <p:commandButton value="Alterar" action="#{assassinatoController.alterar()}"
+                             oncomplete="apresentaAssassinato.xhtml"/>
+        </h:form>
+    </h:body>
+</html>
+

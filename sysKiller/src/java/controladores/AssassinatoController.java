@@ -25,18 +25,22 @@ public class AssassinatoController {
         this.cadAssassinato = new Assassinato();
     }
     
-    public void inserir(){
+    public String inserir(){
         this.repAssassinato.create(cadAssassinato);
         
         this.cadAssassinato = new Assassinato();
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Assassinato inserido com sucesso"));
+        
+        return "cadAssassinato.xhtml";
     }
     
-    public void alterar(){
+    public String alterar(){
         this.repAssassinato.update(this.selectedAssassinato);
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Assassinato alterado com sucesso"));
+        
+         return "cadAssassinato.xhtml";
     }
     
     public Assassinato recuperar(int codigo){

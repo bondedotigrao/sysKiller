@@ -26,12 +26,14 @@ public class MandanteController {
         this.cadMandante = new Mandante();
     }
     
-    public void inserir(){
+    public String inserir(){
         this.repMandante.create(this.selectedMandante);
         
         this.cadMandante = new Mandante();
         
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Mandante inserido com sucesso!"));
+        
+        return "apresentaMandante.xhtml";
     }
     
     public void deletar(){

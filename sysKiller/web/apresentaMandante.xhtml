@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Apresenta Mandante</title>
+    </h:head>
+    <h:body>
+        <p:growl id="gro"/>
+        <h:form id="formMandante">
+            <p:dataTable id="tableMandante" var="kmandante" value="#{mandanteController.recuperarTodos()}"
+                         paginator="true" rows="5" rowKey="#{kmandante.codigo}" selectionMode="single"
+                         selection="#{mandanteController.selectedMandante}">
+                <f:facet name="header">
+                    Mandante
+                </f:facet>
+                <p:column headerText="Código">
+                    #{kmandante.codigo}
+                </p:column>
+                <p:column headerText="Nome">
+                    #{kmandante.nome}
+                </p:column>
+                <p:column headerText="Login">
+                    #{kmandante.login}
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="Alterar" action="alteraMandante.xhtml"/>
+            <p:commandButton value="Deletar" action="#{mandanteController.deletar()}"
+                             update="tableMandante :gro">
+                <p:confirm header="Atenção" message="Deseja realmente deletar esse mandante?"/>
+            </p:commandButton>
+            <p:confirmDialog id="dialConfirm" global="true" widgetVar="widDialConfirm">
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
+            </p:confirmDialog>
+        </h:form>
+    </h:body>
+</html>
+
