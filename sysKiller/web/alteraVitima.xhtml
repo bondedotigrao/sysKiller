@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:fieldset legend="Altera Vitima">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código"/>
+                    <h:outputText value="#{vitimaController.selectedVitima.codigo}"/>
+                    
+                    <h:outputText value="Nome"/>
+                    <p:inputText value="#{vitimaController.selectedVitima.nome}"/>
+                    
+                    <h:outputText value="Descrição Física"/>
+                    <p:inputText value="#{vitimaController.selectedVitima.descricaoF}"/>
+                    
+                    <h:outputText value="Descrições Adicionais"/>
+                    <p:inputText value="#{vitimaController.selectedVitima.descricaoA}"/>
+                </p:panelGrid>
+                
+                <p:dataTable id="formTVitima" paginator="true" var="tipo"
+                             value="#{tipoVitimaController.recuperarTodosTipoVitima()}"
+                             rows="5" rowKey="#{tipo.codigo}" selectionMode="single">
+                    <p:column headerText="Tipo vítima">
+                        <p:commandButton value="X">
+                            <f:setPropertyActionListener value="#{tipo}"
+                                                         target="#{vitimaController.selectedVitima.tipo}"/>
+                        </p:commandButton>
+                        <p:column headerText="Código">
+                            #{tipo.codigo}
+                        </p:column>
+                        <p:column headerText="Tipo">
+                            #{tipo.tipo}
+                        </p:column>
+                    </p:column>
+                
+                </p:dataTable>
+                
+                <p:commandButton value="Alterar" action="#{vitimaController.alterar()}"/>
+            </p:fieldset>
+        </h:form>
+    </h:body>
+</html>
+

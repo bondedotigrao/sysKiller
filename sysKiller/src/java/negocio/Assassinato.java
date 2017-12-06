@@ -28,6 +28,7 @@ public class Assassinato {
         this.matador = matador;
     }
     
+    @Deprecated
     public Assassinato() {
         
     }

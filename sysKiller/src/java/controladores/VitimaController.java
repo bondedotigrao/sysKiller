@@ -35,10 +35,12 @@ public class VitimaController {
         
     }
     
-    public void alterar(){
+    public String alterar(){
         this.repVitima.update(this.selectedVitima);
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Vitima alterada com sucesso!"));
+        
+        return "apresentaVitima.xhtml";
     }
     
     public Vitima recuperar(int codigo){

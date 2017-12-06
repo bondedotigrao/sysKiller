@@ -2,57 +2,102 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Facelet Title</title>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+       <h:head>
+        <title>Cadastro Vítima</title>
     </h:head>
     <h:body>
-         <h:form>
-        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroVitima').show()"/>
-        <p:dataTable id="tabelaVitima" value="#{vitimaController.recuperarTodasVitimas()}"
-                     var="vitima" rowKey="#{vitima.codigo}" paginator="true" rows="5"
-                     selectionMode="single">
-        
-        <p:column headerText="Código">
-            #{vitima.codigo}
-        </p:column>
-        <p:column headerText="Nome">
-            #{vitima.nome}
-        </p:column>
-        <p:column headerText="Tipo de vitima">
-            #{tipoVitima.descricao}
-        </p:column>
-        <p:column headerText="Descrição físicas">
-            #{vitima.descricaoF}
-        </p:column>
-        <p:column headerText="Descrições adicionais">
-            #{vitima.descricaoA}
-        </p:column>
-            </p:dataTable>
-        </h:form>
-    </h:body>
-</html>
-
-   <h:form id="formVitima">
+        <h:form id="formVitima">
             <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadVitima').show()"/>
-            <p:dataTable id="tableVitima" var="item" value="#{vitimaController.recuperarTodasVitimas()}"
-                         rowKey="#{item.codigo}" rows="5" paginator="true" selectionMode="single">
+            <p:dataTable id="tableVitima" var="vitima" value="#{vitimaController.recuperarTodasVitimas()}"
+                         rowKey="#{vitima.codigo}" rows="5" paginator="true" selectionMode="single"
+                         selection="#{vitimaController.selectedVitima}">
+            
                 <p:column headerText="Código">
-                    #{item.codigo}
+                    #{vitima.codigo}
                 </p:column>
                 <p:column headerText="Nome">
-                    #{item.nome}
+                    #{vitima.nome}
                 </p:column>
-                <p:column headerText="Tipo da vitima">
-                    #{item.tipo.tipo}
+                <p:column headerText="Descrições Físicas">
+                    #{vitima.descricaoF}
                 </p:column>
-                <p:column headerText="Descrição física">
-                    #{item.descricaoF}
+                <p:column headerText="Descrições adicionais">
+                    #{vitima.descricaoA}
                 </p:column>
-                <p:column headerText="Descrições Adicionais">
-                    #{item.descricaoA}
+                <p:column headerText="Tipo de Vítima">
+                    #{vitima.tipo.tipo}
                 </p:column>
                 <p:column headerText="Operações">
-                    
+                    <p:commandButton value="Alterar" action="alteraVitima.xhtml"/>
+                    <p:commandButton value="Deletar" action="#{vitimaController.deletar()}"
+                                     update="tableVitima"/>
+                    <p:commandButton value="Visualizar"
+                                     oncomplete="PF('widDialVisualizaVitima').show()"/>
                 </p:column>
             </p:dataTable>
+        </h:form>
+              
+        
+        <p:dialog id="dialCadTVitima" visible="false" modal="true" resizable="false" widgetVar="widDialCadVitima">
+            <h:form id="formCadVitima">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Nome"/>
+                    <p:inputText value="#{vitimaController.cadVitima.nome}"/>
+                    
+                    <h:outputText value="Descrições Físicas"/>
+                    <p:inputText value="#{vitimaController.cadVitima.descricaoF}"/>
+                    
+                    <h:outputText value="Descrições adicionais"/>
+                    <p:inputText value="#{vitimaController.cadVitima.descricaoA}"/>
+                </p:panelGrid>
+                <h:outputText value="#{vitimaController.cadVitima.tipo.tipo}"/><br/>
+                <p:dataTable id="tableCadVitima" var="tVitima" value="#{tipoVitimaController.recuperarTodosTipoVitima()}"
+                             rowKey="#{tVitima.codigo}" rows="5" paginator="true" selectionMode="single">
+                    <p:column headerText="Tipo Vitima">
+                              <p:commandButton value="X">
+                                  <f:setPropertyActionListener value="#{tVitima}" target="#{vitimaController.cadVitima.tipo}"/>
+                        </p:commandButton>
+                        </p:column>
+                              <p:column headerText="Código">
+                                  #{tVitima.codigo}
+                        </p:column>
+                              <p:column headerText="Tipo">
+                                  #{tVitima.tipo}
+                        </p:column>
+                </p:dataTable>
+                
+          
+                
+                <p:commandButton value="Cadastrar" action="#{vitimaController.inserir()}"
+                                 update=":formVitima" oncomplete="PF('widDialCadVitima').hide()"/>
+            </h:form>
+            
+        </p:dialog>
+        
+        <p:dialog id="dialVisualizaVitima" visible="false" widgetVar="widDialVisualizaVitima" modal="true"
+                  resizable="false">
+            <p:panelGrid columns="2">
+                <h:outputText value="Código"/>
+            <h:outputText value="#{vitimaController.selectedVitima.codigo}"/>
+            
+            <h:outputText value="Nome"/>
+            <h:outputText value="#{vitimaController.selectedVitima.nome}"/>
+            
+            <h:outputText value="Descrição física"/>
+            <h:outputText value="#{vitimaController.selectedVitima.descricaoF}"/>
+            
+            <h:outputText value="Descrições adicionais"/>
+            <h:outputText value="#{vitimaController.selectedVitima.descricaoA}"/>
+            
+            <h:outputText value="Tipo de vítima"/>
+            <h:outputText value="#{vitimaController.selectedVitima.tipo.tipo}"/>
+            
+            
+            </p:panelGrid>
+            <p:commandButton value="Voltar" oncomplete="PF('widDialVisualizaVitima').hide()"/>
+            
+        </p:dialog> 
+    </h:body>
+</html>
