@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:growl id="gro" life="4000"/>
+        <h:form id="formCadMandante">
+            <p:commandButton value="cadastrar mandante" oncomplete="PF('widDialCadKiller').show()"/>
+            <p:dataTable id="mandanteTable" value="#{mandanteController.recuperarTodos()}"
+                         var="mandante" rowKey="#{mandante.codigo}" paginator="true" rows="5"
+                         selection="single">
+                <p:column headerText="Código">
+                    #{mandante.codigo}
+                </p:column>
+                <p:column headerText="Nome">
+                    #{mandante.nome}
+                </p:column>
+                <p:column headerText="Login">
+                    #{mandante.login}
+                </p:column>
+                <p:column headerText="Senha">
+                    #{mandante.senha}
+                </p:column>
+                <p:column headerText="operações">
+                    <p:commandButton icon="ui-icon-search" oncomplete="PF('widDialVisualMandante').show()"
+                                     update=":formCadMandante:dialVisualizaMandante">
+                        <f:setPropertyActionListener value="#{mandante}" target="#{mandanteController.selectedMandante}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-pencil" oncomplete="PF('widDialAlterarMandante').show()"
+                                     update=":dialAlteraMandante">
+                        <f:setPropertyActionListener value="#{mandante}" target="#{mandanteController.selectedMandante}"/>
+                    </p:commandButton>
+                    <p:commandButton icon="ui-icon-close" action="#{mandanteController.deletar()}"
+                                     update="formCadMandante">
+                        <f:setPropertyActionListener value="#{mandante}" target="#{mandanteController.selectedMandante}"/>
+                        <p:confirm header="Atenção" message="Deseja realmente apagar o registro?"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            
+            <p:dialog id="dialVisualizaMandante" visible="false" modal="true" header="Mandante cadastrado"
+                      resizable="true" widgetVar="widDialVisualizaMandante">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código:"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.codigo}"/>
+                    
+                    <h:outputText value="Nome:"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.nome}"/>
+                    
+                    <h:outputText value="Login:"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.login}"/>
+
+                    <h:outputText value="Senha:"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.senha}"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        <p:dialog id="dialCadMandante" visible="false" modal="true"
+                  resizable="false" widgetVar="widDialCadMandante">
+            <h:form id="formDialCadastro">
+                <p:panelGrid columns="4">
+                    <h:outputText value="Nome*:"/>
+                    <p:inputText id="txtNome" value="#{mandanteController.cadMandante.nome}"/>
+                    <p:message for='txtNome'/>
+                    
+                    <h:outputText value="Login*:"/>
+                    <p:inputText id="txtLogin" value="#{mandanteController.cadMandante.login}"/>
+                    
+                    <h:outputText value="Senha*:"/>
+                    <p:inputText id="txtSenha" value="#{mandanteController.cadMandante.senha}"/>
+                    <h:outputText/>
+                </p:panelGrid>
+                <p:commandButton value="cadastrar" action="#{mandanteController.inserir()}"
+                                 update=":formCadMandante :gro" oncomplete="PF('widDialCadMandante').hide()">
+                    <p:confirm header="Atenção" message="Deseja realmente cadastrar?"/>
+                </p:commandButton>
+            </h:form>
+        </p:dialog>
+        <p:dialog id="dialAlteraMandante" visible="false" modal="true"
+                  resizable="true" widgetVar="widDialAlteraMandante">
+            <h:form id="formDialAltera">
+                <p:panelGrid columns="4">
+                    <h:outputText value="Nome*:"/>
+                    <p:inputText id="txtAltNome" value="#{mandanteController.selectedMandante.nome}"/>
+                    
+                    <h:outputText value="Login*:"/>
+                    <p:inputText id="txtAltLogin" value="#{mandanteController.selectedMandante.login}"/>
+
+                    <h:outputText value="Senha*:"/>
+                    <p:inputText id="txtAltSenha" value="#{mandanteController.selectedMandante.senha}"/>
+                </p:panelGrid>
+                <p:commandButton value="alterar" action="#{mandanteController.alterar()}"
+                                 update=":formCadMandante :gro" oncomplete="PF('widDialAlteraMandante').hide()">
+                    <p:confirm header="Atenção" message="Deseja realmente alterar?"/>
+                </p:commandButton>
+            </h:form>
+        </p:dialog>
+        
+        <p:confirmDialog id="dialConfirm" global="true" widgetVar="widDialConfirm">
+            <h:form>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" type="button"
+                                 icon="ui-icon-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" type="button"
+                                 icon="ui-icon-close"/>
+            </h:form>
+        </p:confirmDialog>
+
+        <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadastroMandante').show()"/>
+        <p:dataTable id="tabelaMandante" value="#{mandanteController.recuperarTodos()}"
+                     var="mandante" rowKey="#{mandante.codigo}" paginator="true" rows="5"
+                     selectionMode="single">
+            <p:column headerText="Código">
+                #{mandante.codigo}
+            </p:column>
+            <p:column>
+                #{mandante.nome}
+            </p:column>
+            <p:column>
+                #{mandante.login}
+            </p:column>
+            <p:column>
+                #{mandante.senha}
+            </p:column>
+        </p:dataTable>
+    </h:body>
+</html>
+

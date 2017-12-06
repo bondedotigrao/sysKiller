@@ -26,12 +26,14 @@ public class VitimaController {
         this.cadVitima = new Vitima();
     }
     
-    public void inserir(){
+    public String inserir(){
         this.repVitima.create(this.cadVitima);
         
         this.cadVitima = new Vitima();
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Vitima cadastrada com sucesso!"));
+        
+        return "crudVitima.xhtml";
         
     }
     
@@ -40,17 +42,19 @@ public class VitimaController {
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Vitima alterada com sucesso!"));
         
-        return "apresentaVitima.xhtml";
+         return "crudVitima.xhtml";
     }
     
     public Vitima recuperar(int codigo){
         return this.repVitima.read(codigo);
     }
     
-    public void deletar(){
+    public String deletar(){
         this.repVitima.delete(this.selectedVitima);
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Vitima " + this.selectedVitima.getNome() + " deletada com sucesso!"));
+        
+         return "crudVitima.xhtml";
     }
     
     public List<Vitima> recuperarTodasVitimas(){

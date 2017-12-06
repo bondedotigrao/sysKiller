@@ -74,12 +74,4 @@ public class PersistenceDao {
         em.getTransaction().commit();
         em.close();
     }
-    
-    /*public static void main(String args[]){
-        Cliente c = new Cliente(0, "123", "123", 
-                "3456", "21231", "22123", "66462");
-        
-        PersistenceDao.getInstance().persist(c);
-    }*/
-    
 }

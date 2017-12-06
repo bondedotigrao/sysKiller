@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="formAssassinato">
+            <p:commandButton value="Cadastrar" oncomplete="PF('widDialCadAssassinato').show()"/>
+            
+            <p:dataTable id="tableAssassinato" var="ass" value="#{assassinatoController.recuperarTodos()}"
+                         rowKey="#{ass.codigo}" rows="5" selectionMode="single" selection="#{assassinatoController.selectedAssassinato}">
+                
+                <p:column headerText="Código">
+                    #{ass.codigo}
+                </p:column>
+                <p:column headerText="Mandante">
+                    #{ass.mandante.nome}
+                </p:column>
+                <p:column headerText="Matador">
+                    #{ass.matador.nome}
+                </p:column>
+                <p:column headerText="Vitima">
+                    #{ass.vitima.nome}
+                </p:column>
+                <p:column headerText="Operações">
+                    <p:commandButton value="Deletar" action="#{assassinatoController.deletar()}"
+                                     update=":formAssassinato"/>
+                    <p:commandButton value="Visualizar" oncomplete="PF('widDialVisualizaAssassinato').show()"/>
+                </p:column>
+            </p:dataTable>
+            
+            <p:dialog id="dialCadAssassinato" visible="false" resizable="false"
+                      widgetVar="widDialCadAssassinato">
+                        <h:outputText value="#{assassinatoController.cadAssassinato.mandante}"/><br/>
+            <p:dataTable id="tableMandante" value="#{mandanteController.recuperarTodos()}"
+                         var="mandante" rows="5" rowKey="#{mandante.codigo}" paginator="true"
+                         selectionMode="single" selection="#{assassinatoController.cadAssassinato.mandante}">
+                <p:column headerText="X">
+                    <p:commandButton value=". . .">
+                        <f:setPropertyActionListener value="mandante1" target="#{assassinatoController.cadAssassinato.mandante}"/>
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Código">
+                    #{mandante.codigo}
+                </p:column>
+                <p:column headerText="Nome">
+                    #{mandante.nome}
+                </p:column>
+            </p:dataTable>
+            
+            <h:outputText value="#{assassinatoController.cadAssassinato.matador}"/><br/>
+            <p:dataTable id="tableKiller" value="#{killerController.recuperarTodosMatadores()}" 
+                         var="killer" rows="5" rowKey="#{killer.codigo}" selectionMode="single"
+                         selection="#{assassinatoController.cadAssassinato.matador}">
+                <p:column headerText="X">
+                    <p:commandButton value=". . .">
+                        <f:setPropertyActionListener value="killer1" target="#{assassinatoController.cadAssassinato.matador}"/>
+                    </p:commandButton>
+                    </p:column>
+                    <p:column headerText="Código">
+                        #{killer.codigo}
+                    </p:column>
+                    <p:column headerText="Nome">
+                        #{killer.nome}
+                    </p:column>
+                
+            </p:dataTable>
+            
+            <h:outputText value="#{assassinatoController.cadAssassinato.vitima}"/><br/>
+            <p:dataTable id="tableVitima" value="#{vitimaController.recuperarTodasVitimas()}" var="vitima"
+                         rows="5" rowKey="#{vitima.codigo}" paginator="true" selectionMode="single"
+                         selection="#{assassinatoController.cadAssassinato.vitima}">
+                <p:column headerText="X">
+                    <p:commandButton value=". . .">
+                        <f:setPropertyActionListener value="vitima1" target="#{assassinatoController.cadAssassinato.vitima}"/>
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="Cadastrar" action="#{assassinatoController.inserir()}"
+                             update=":formAssassinato" oncomplete="PF('widDialCadAssassinato').hide()"/>   
+            </p:dialog>
+           
+            <p:dialog id="dialVisualizaAssassinato" visible="false" resizable="false"
+                      widgetVar="widDialVisualizaAssassinato">
+                <p:panelGrid columns="2">
+                      <p:column headerText="Código">
+                    #{assassinatoController.selectedAssassinato.codigo}
+                </p:column>
+                <p:column headerText="Matador">
+                    #{assassinatoController.selectedAssassinato.matador.nome}
+                </p:column>
+                    <p:column headerText="Mandante">
+                         #{assassinatoController.selectedAssassinato.mandante.nome}
+                    </p:column>
+                    <p:column headerText="Vitima">
+                        #{assassinatoController.selectedAssassinato.vitima.nome}
+                    </p:column>
+                </p:panelGrid>
+                <p:commandButton value="Voltar" oncomplete="PF(widDialVisualizaAssassinato).hide()"/>
+            </p:dialog>
+        </h:form> 
+    </h:body>
+</html>
+

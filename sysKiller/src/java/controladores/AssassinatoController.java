@@ -77,5 +77,5 @@ public class AssassinatoController {
         this.cadAssassinato = cadAssassinato;
     }
     
-    
+
 }
