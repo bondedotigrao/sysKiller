@@ -27,10 +27,8 @@ public class MandanteController {
     }
     
     public String inserir(){
-        this.repMandante.create(this.selectedMandante);
-        
-        this.cadMandante = new Mandante();
-        
+        this.repMandante.create(this.cadMandante);
+ 
         FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Mandante inserido com sucesso!"));
         
         return "apresentaMandante.xhtml";
@@ -46,10 +44,12 @@ public class MandanteController {
         return this.repMandante.read(codigo);
     }
     
-    public void alterar(){
+    public String alterar(){
         this.repMandante.update(this.selectedMandante);
         
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Mandante alterado com sucesso!"));
+    
+        return "apresentaMandante.xhtml";
     }
     
     public List<Mandante> recuperarTodos(){

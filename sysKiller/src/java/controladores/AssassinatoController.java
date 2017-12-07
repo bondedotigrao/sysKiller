@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import negocio.Assassinato;
+import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -19,6 +20,8 @@ public class AssassinatoController {
     private RepositorioGenerico<Assassinato> repAssassinato = null;
     private Assassinato selectedAssassinato;
     private Assassinato cadAssassinato;
+    
+    private boolean skip;
     
     public AssassinatoController(){
         this.repAssassinato = new RepositorioAssassinatoImplDB();
@@ -80,6 +83,23 @@ public class AssassinatoController {
     public void setCadAssassinato(Assassinato cadAssassinato) {
         this.cadAssassinato = cadAssassinato;
     }
-    
+     
+    public boolean isSkip() {
+        return skip;
+    }
+ 
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
+     
+    public String onFlowProcess(FlowEvent event) {
+        if(skip) {
+            skip = false;   //reset in case user goes back
+            return "confirm";
+        }
+        else {
+            return event.getNewStep();
+        }
+    }
 
 }

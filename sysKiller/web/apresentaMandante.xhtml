@@ -26,11 +26,29 @@
                     #{kmandante.login}
                 </p:column>
             </p:dataTable>
+            <p:commandButton value="Visualizar" oncomplete="PF('widDialVisualizaMandante').show()"
+                             update="dialVisualizaMandante"/>
             <p:commandButton value="Alterar" action="alteraMandante.xhtml"/>
             <p:commandButton value="Deletar" action="#{mandanteController.deletar()}"
                              update="tableMandante :gro">
                 <p:confirm header="Atenção" message="Deseja realmente deletar esse mandante?"/>
             </p:commandButton>
+            <p:dialog id="dialVisualizaMandante" visible="false" modal="Mandante" resizable="false"
+                widgetVar="widDialVisualizaMandante">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.codigo}"/>
+                    
+                    <h:outputText value="Nome"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.nome}"/>
+                    
+                    <h:outputText value="Login"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.login}"/>
+                    
+                    <h:outputText value="senha"/>
+                    <h:outputText value="#{mandanteController.selectedMandante.senha}"/>
+                </p:panelGrid>
+            </p:dialog>
             <p:confirmDialog id="dialConfirm" global="true" widgetVar="widDialConfirm">
                 <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
                 <p:commandButton value="Não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>

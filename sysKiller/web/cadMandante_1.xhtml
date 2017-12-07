@@ -31,7 +31,7 @@
                       widgetVar="widDialConfirmCadMandante" header="Atenção!">
                 <h:outputText value="Deseja realmente cadastrar esse mandante?"/><br/>
                 <p:commandButton value="Sim" action="#{mandanteController.inserir()}"
-                                 update=":formCadMandante" oncomplete="PF('widDialConfirmCadMandante').hide();"/>
+                                 update=":formCadMandante" oncomplete="PF('widDialConfirmCadMandante').hide()"/>
                 <p:commandButton value="Não" oncomplete="PF('widDialConfirmCadMandante').hide()"/>
             </p:dialog>
         </h:form>
