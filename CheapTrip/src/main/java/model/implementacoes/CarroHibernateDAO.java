@@ -14,7 +14,7 @@ import org.hibernate.cfg.Configuration;
  */
 public class CarroHibernateDAO implements CarroDAO {
 
-    private SessionFactory sessions;
+    private final SessionFactory sessions;
     private static CarroHibernateDAO instance;
 
     public CarroHibernateDAO getInstance() {
@@ -39,6 +39,7 @@ public class CarroHibernateDAO implements CarroDAO {
         } catch (Exception cadCarroError) {
             System.out.println(cadCarroError.getCause()
                     + "\nOcorreu um erro ao cadastrar um carro");
+            t.rollback();
         } finally {
             session.close();
         }
@@ -47,14 +48,11 @@ public class CarroHibernateDAO implements CarroDAO {
     @Override
     public Carro recuperar(int codigo) {
         Session session = this.sessions.openSession();
-
         try {
             return (Carro) session.createQuery("From carro Where id_carro=" + codigo).getResultList().get(0);
         } catch (Exception recCarroError) {
             System.out.println(recCarroError.getCause()
                     + "\nOcorreu um erro ao recuperar um carro");
-        } finally {
-            session.close();
         }
         return null;
 

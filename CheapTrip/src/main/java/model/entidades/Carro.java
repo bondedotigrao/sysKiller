@@ -21,23 +21,20 @@ public class Carro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_carro;
     @Column(length = 15)
-    private String nome;
+    private String marca;
     @Column(length = 3,nullable = false,updatable = true)
     private int vagas;
     @Column(length = 7,nullable = false)
     private String placa;
-    @Column
-    private String chassi;
     
     @Deprecated
     public Carro() {
     }
 
-    public Carro(String nome, int vagas, String placa, String chassi) {
-        this.nome = nome;
+    public Carro(String marca, int vagas, String placa) {
+        this.marca = marca;
         this.vagas = vagas;
         this.placa = placa;
-        this.chassi = chassi;
     }
 
     public int getId_carro() {
@@ -48,12 +45,12 @@ public class Carro {
         this.id_carro = id_carro;
     }
 
-    public String getNome() {
-        return nome;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public int getVagas() {
@@ -70,14 +67,6 @@ public class Carro {
 
     public void setPlaca(String placa) {
         this.placa = placa;
-    }
-
-    public String getChassi() {
-        return chassi;
-    }
-
-    public void setChassi(String chassi) {
-        this.chassi = chassi;
     }
 
     @Override
@@ -104,13 +93,10 @@ public class Carro {
         if (this.vagas != other.vagas) {
             return false;
         }
-        if (!Objects.equals(this.nome, other.nome)) {
+        if (!Objects.equals(this.marca, other.marca)) {
             return false;
         }
         if (!Objects.equals(this.placa, other.placa)) {
-            return false;
-        }
-        if (!Objects.equals(this.chassi, other.chassi)) {
             return false;
         }
         return true;
@@ -118,7 +104,7 @@ public class Carro {
 
     @Override
     public String toString() {
-        return "Carro{" + "id_carro=" + id_carro + ", nome=" + nome + ", vagas=" + vagas + ", placa=" + placa + ", chassi=" + chassi + '}';
+        return "Carro{" + "id_carro=" + id_carro + ", marca=" + marca + ", vagas=" + vagas + ", placa=" + placa + '}';
     }
     
     
